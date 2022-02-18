@@ -37,7 +37,7 @@ func (tu *taskService) Create(title, content string) (*model.Task, error) {
 	return createdTask, nil
 }
 
-// FindByID taskをIDで取得するときのユースケース
+// Get taskをIDで取得するときのユースケース
 func (tu *taskService) Get(id int) (*model.Task, error) {
 	foundTask, err := tu.taskRepo.Get(id)
 	if err != nil {
