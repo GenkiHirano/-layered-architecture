@@ -1,19 +1,26 @@
-package infra
+package repository
 
 import (
 	"log"
 
 	"github.com/GenkiHirano/layered-architecture/domain/model"
-	"github.com/GenkiHirano/layered-architecture/repository"
 	"xorm.io/xorm"
 )
+
+// TaskRepository task repositoryのinterface
+type TaskRepository interface {
+	Create(task *model.Task) (*model.Task, error)
+	Get(id int) (*model.Task, error)
+	Update(task *model.Task) (*model.Task, error)
+	// Delete(task *model.Task) error
+}
 
 type taskRepository struct {
 	Engine *xorm.Engine
 }
 
 // NewTaskRepository task repositoryのコンストラクタ
-func NewTaskRepository(engine *xorm.Engine) repository.TaskRepository {
+func NewTaskRepository(engine *xorm.Engine) TaskRepository {
 	return &taskRepository{Engine: engine}
 }
 
@@ -33,7 +40,7 @@ func (tr *taskRepository) Create(task *model.Task) (*model.Task, error) {
 	return newTask, nil
 }
 
-// FindByID taskをIDで取得
+// Get taskをIDで取得
 func (tr *taskRepository) Get(id int) (*model.Task, error) {
 	task := &model.Task{ID: id}
 
